@@ -44,6 +44,32 @@ Label : Contradiction
 
 Explanation : The premise implies they were talking and being warned — contradicting that they stayed quiet and got recess.
 
+#### 🟥 QQP Example (Quora Question Pairs)
+
+Question 1: How can I improve my English speaking skills?
+
+Question 2: What are the best ways to get better at speaking English?
+
+Label: Duplicate
+
+Explanation: Both questions ask for methods to improve spoken English, so they have the same meaning.
+
+#### 🟥 SST-2 Example (Stanford Sentiment Treebank v2)
+
+Sentence: The movie had great acting but a painfully slow storyline.
+
+Label: Negative
+
+Explanation: Despite praising the acting, the sentence expresses an overall negative opinion due to the slow storyline
+
+#### 🟥 AG-NEWS Example (Quora Question Pairs)
+
+Text: NASA announced a new mission to explore the surface of Mars using advanced robotics.
+
+Label: Sci/Tech
+
+Explanation: The text discusses a space mission and advanced technology, which falls under the Science/Technology category.
+
 ### Model configuration of DMoEBERT (DM) variants
 ![config](https://github.com/shovonSharma/thesis_88/blob/main/Model%20config.jpg)
 
