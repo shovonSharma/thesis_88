@@ -1,18 +1,26 @@
 # thesis_88
 
-DMoEBERT, is my thesis work. I replaced layer norm with META's Dynamic-Tanh to overcome normalization layer's computational overhead and feed-forward MLP layer with Sparsely activated mixture of experts with noisy top-k routing for efficiency.
-I trained the complete pipeline from scratch. DMoEBERT outperforms BERT-base(110M) and RoBERTA-base(125M) in efficiency.
+DMoEBERT, a Systematic Study of Sparse Encoder Models Trained from Scratch under Resource Constraints, is my thesis work. I was inspired by META's [Dynamic-Tanh](https://arxiv.org/abs/2503.10622) to overcome normalization layer's computational overhead and Sparsely activated mixture of experts from GOOGLE's [Switch Transformers](https://arxiv.org/abs/2101.03961) for efficient feed forward network. I trained the complete pipeline from scratch on downstream tasks such as natural language inference, sentiment analysis, paraphrase detection, and topic classification.
 
-I compared my model against finetuned BERT-base(110M) and RoBERTA-base(125M). For finetuning, i used hugging face framework PEFT/LoRA.
-
-I also compared my models against BERT-23M and BERT-45M and my models outperform those models both in accuracy and efficiency.
+For ablation studies, I compared my model against finetuned BERT-base(110M) and RoBERTA-base(125M) as well as custom configuration of BERT to match my models' parameters. For finetuning, i used hugging face framework PEFT/LoRA. DMoEBERT outperform those models in efficiency and shows competitive accuracy.
 
 #### Rad the detailed report of my thesis [here](https://github.com/shovonSharma/thesis_88/blob/main/Report%20on%20DMoEBERT.pdf).
 
-### ARCHITECTURE
+## ARCHITECTURE
 ![DMoEBERT Architecture](https://github.com/shovonSharma/thesis_88/blob/main/DMoEBERT.jpg)
 
-### DOWNSTREAM TASKS 
+### Model configuration of DMoEBERT (DM) variants
+```
+| Configuration   | DMoEBERT-23M   | DMoEBERT-23M | DMoEBERT-23M   |
+|-----------------|----------------|--------------|----------------|
+| embed_dim       |      256       |      384     |      512       |    
+| Heads           |       4        |       6      |       8        |    
+| Experts         |       6        |       6      |       6        |
+| Layers          |       8        |       8      |      11        |
+| capacity factor |     1.15       |     1.15     |     1.15       |
+```
+
+## DOWNSTREAM TASKS 
 
 #### 🟩 Natural Language Inference - SNLI Example (Stanford Natural Language Inference)
 
@@ -71,18 +79,8 @@ Label: Sci/Tech
 Explanation: The text discusses a space mission and advanced technology, which falls under the Science/Technology category.
 
 
-### Model configuration of DMoEBERT (DM) variants
-```
-| Configuration   | DMoEBERT-23M   | DMoEBERT-23M | DMoEBERT-23M   |
-|-----------------|----------------|--------------|----------------|
-| embed_dim       |      256       |      384     |      512       |    
-| Heads           |       4        |       6      |       8        |    
-| Experts         |       6        |       6      |       6        |
-| Layers          |       8        |       8      |      11        |
-| capacity factor |     1.15       |     1.15     |     1.15       |
-```
 
-### Performance comparison and ablation study on SNLI and ANLI test sets. Acc.=Accuracy, F1-M=F1-macro
+## Performance comparison and ablation study on SNLI and ANLI test sets. Acc.=Accuracy, F1-M=F1-macro
 ```
 ----------------------------------------------------------------------------------------------------------------------
 | Model                          | SNLI Acc. | SNLI F1-M | ANLI-R2 Acc. | ANLI-R2 F1-M | ANLI-R3 Acc. | ANLI-R3 F1-M |
@@ -106,7 +104,7 @@ Explanation: The text discusses a space mission and advanced technology, which f
 ----------------------------------------------------------------------------------------------------------------------
 ```
 
-### Performance on AG News, QQP, and SST-2. Acc.=Accuracy, F1-M=F1-macro
+## Performance on AG News, QQP, and SST-2. Acc.=Accuracy, F1-M=F1-macro
 ```
 | Model           | AG News Acc.| AG News F1-M| QQP Acc.* | QQP F1-M* | SST-2 Acc.* | SST-2 F1-M* |
 |-----------------|-------------|-------------|-----------|-----------|-------------|-------------|
@@ -117,7 +115,7 @@ Explanation: The text discusses a space mission and advanced technology, which f
 ```
 
 
-### Per-class performance
+## Per-class performance
 
 #### Per-class performance on SNLI test set. Ent. = Entailment, Neu. = Neutral, Con. = Contradiction.
 ```
@@ -170,7 +168,7 @@ Explanation: The text discusses a space mission and advanced technology, which f
 | DMoEBERT-23M   | Sci/Tech   | 0.8910    | 0.8953 | 0.8931   |
 ```
 
-### Routing Statistics Analysis
+## Routing Statistics Analysis
 DyT exhibits substantially more balanced expert routing, with ~20× lower utilization variance and higher, more stable routing entropy compared to LayerNorm.
 (Performed on QQP validation set)
 ```
@@ -192,7 +190,7 @@ DyT exhibits substantially more balanced expert routing, with ~20× lower utiliz
 |      5 | 16.76%            | 77,573         | 15.86%           | 73,423        |
 ```
 
-### Analysis of Statistical Significance of Ablation Results Across Random Seeds
+## Analysis of Statistical Significance of Ablation Results Across Random Seeds
 
 #### Per seed accuracy
 ```
