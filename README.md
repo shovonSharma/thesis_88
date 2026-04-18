@@ -11,7 +11,7 @@ For ablation studies, I compared my model against finetuned BERT-base(110M) and 
 
 ### Model configuration of DMoEBERT (DM) variants
 ```
-| Configuration   | DMoEBERT-23M   | DMoEBERT-23M | DMoEBERT-23M   |
+| Configuration   | DMoEBERT-23M   | DMoEBERT-45M | DMoEBERT-97M   |
 |-----------------|----------------|--------------|----------------|
 | embed_dim       |      256       |      384     |      512       |    
 | Heads           |       4        |       6      |       8        |    
@@ -225,5 +225,7 @@ DyT exhibits substantially more balanced expert routing, with ~20× lower utiliz
 | Main vs DyT → LN         | +0.14% | 0.1988  | ❌ No                   \
 | Main vs SparseMoE → FFWD | +0.14% | 0.1837  | ❌ No                   |
 ```
-controlled ablations were performed replacing Dynamic Tanh with LayerNorm and sparse MoE layers with dense feed-forward layers to isolate their effects. Each setting was evaluated over three matched random seeds (42, 123, 1337) on AG News. Across seeds, both ablations exhibit low variance (std.\ $\approx 0.10$--$0.14\%$) and mean accuracies comparable to the baseline. Paired t-tests confirm that neither ablation yields statistically significant differences relative to the main model (main vs DyT→LN: p = 0.199; main vs MoE→FFWD: p = 0.184), indicating that the primary contributions of DyT and sparse MoE lie in training stability and computational efficiency rather than final accuracy gains.
+controlled ablations were performed replacing Dynamic Tanh with LayerNorm and sparse MoE layers with dense feed-forward layers to isolate their effects. Each setting was evaluated over three matched random seeds (42, 123, 1337) on AG News. Across seeds, both ablations exhibit low variance (std.\ $\approx 0.10$--$0.14\%$) and mean accuracies comparable to the baseline. 
+
+Paired t-tests confirm that neither ablation yields statistically significant differences relative to the main model (main vs DyT→LN: p = 0.199; main vs MoE→FFWD: p = 0.184), indicating that the primary contributions of DyT and sparse MoE lie in training stability and computational efficiency rather than final accuracy gains.
 
